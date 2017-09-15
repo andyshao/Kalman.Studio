@@ -19,3 +19,12 @@
 ![Nuget配置](https://raw.githubusercontent.com/don59/Kalman.Studio/master/Documents/Images/readme_1.jpg)
 
 ![Nuget配置](https://raw.githubusercontent.com/don59/Kalman.Studio/master/Documents/Images/readme_2.jpg)
+
+## 二、更新日志
+
+2017-09-15
+
+	* 升级.Net Framework到4.6；
+	* 升级某些依赖项；
+	* 修正生成代码报错的问题；
+	* 调整一些界面细节；
