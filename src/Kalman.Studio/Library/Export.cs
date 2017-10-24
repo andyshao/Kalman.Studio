@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Aspose.Cells;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.IO;
-using Kalman.Command;
-using ICSharpCode.TextEditor.Util;
-using iTextSharp.text.rtf;
-using iTextSharp.text.html;
-using Kalman.Data.SchemaObject;
 using Kalman.Data;
+using Kalman.Data.SchemaObject;
 using Kalman.PdmParser;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
+/// <summary>
+/// 由于删除了版权DLL，导致该功能无法使用。可在QQ群：122161138中下载source_lib.zip
+/// </summary>
 namespace Kalman.Studio
 {
     public class iTextExporter
@@ -25,9 +23,9 @@ namespace Kalman.Studio
         }
 
         string fileName = string.Empty;
-        Table t = null;
+        //Table t = null;
         BaseFont baseFont = BaseFont.CreateFont("c:\\windows\\fonts\\STSONG.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-        Font font;
+        iTextSharp.text.Font font;
 
         public iTextExporter(string path)
         {
@@ -40,7 +38,7 @@ namespace Kalman.Studio
 
             //BaseFont baseFont = BaseFont.CreateFont("C:\\WINDOWS\\FONTS\\SIMHEI.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             //BaseFont baseFont = BaseFont.CreateFont("c:\\windows\\fonts\\STSONG.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            font = new Font(baseFont,12);
+            font = new iTextSharp.text.Font(baseFont,12);
         }
 
         public void PDModel2Pdf(IList<PDTable> tableList, string title)
@@ -69,7 +67,7 @@ namespace Kalman.Studio
                     w = PdfWriter.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
                     break;
                 case ExportTyep.RTF:
-                    w = RtfWriter2.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
+                    //w = RtfWriter2.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
                     break;
                 //case ExportTyep.HTML:
                 //    w = HtmlWriter.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
@@ -96,7 +94,8 @@ namespace Kalman.Studio
 
             foreach (PDTable table in tableList)
             {
-                sec = cpt.AddSection(new Paragraph(string.Format("{0}[{1}]", table.Name, table.Code), font));
+                //sec = cpt.AddSection(new Paragraph(string.Format("{0}[{1}]", table.Name, table.Code), font));
+                sec = cpt.AddSection(new Paragraph(string.Format("{0}[{1}]", table.Name, table.Code)));
 
                 if (string.IsNullOrEmpty(table.Comment) == false)
                 {
@@ -104,76 +103,76 @@ namespace Kalman.Studio
                     sec.Add(chunk);
                 }
 
-                t = new Table(9, table.ColumnList.Count);
+                //t = new Table(9, table.ColumnList.Count);
 
-                //t.Border = 15;
-                //t.BorderColor = Color.BLACK;
-                //t.BorderWidth = 1.0f;
-                t.AutoFillEmptyCells = true;
-                t.CellsFitPage = true;
-                t.TableFitsPage = true;
-                t.Cellpadding = 3;
-                //if (exportType == ExportTyep.PDF) t.Cellspacing = 2;
-                t.DefaultVerticalAlignment = Element.ALIGN_MIDDLE;
+                ////t.Border = 15;
+                ////t.BorderColor = Color.BLACK;
+                ////t.BorderWidth = 1.0f;
+                //t.AutoFillEmptyCells = true;
+                //t.CellsFitPage = true;
+                //t.TableFitsPage = true;
+                //t.Cellpadding = 3;
+                ////if (exportType == ExportTyep.PDF) t.Cellspacing = 2;
+                //t.DefaultVerticalAlignment = Element.ALIGN_MIDDLE;
 
-                t.SetWidths(new int[] { 200, 200, 150, 50, 50, 50, 50, 50, 300 });
+                //t.SetWidths(new int[] { 200, 200, 150, 50, 50, 50, 50, 50, 300 });
 
-                t.AddCell(BuildHeaderCell("名称"));
-                t.AddCell(BuildHeaderCell("代码"));
-                t.AddCell(BuildHeaderCell("数据类型"));
-                t.AddCell(BuildHeaderCell("长度"));
-                t.AddCell(BuildHeaderCell("精度"));
-                t.AddCell(BuildHeaderCell("主键"));
-                t.AddCell(BuildHeaderCell("外键"));
-                t.AddCell(BuildHeaderCell("可空"));
-                t.AddCell(BuildHeaderCell("注释"));
+                //t.AddCell(BuildHeaderCell("名称"));
+                //t.AddCell(BuildHeaderCell("代码"));
+                //t.AddCell(BuildHeaderCell("数据类型"));
+                //t.AddCell(BuildHeaderCell("长度"));
+                //t.AddCell(BuildHeaderCell("精度"));
+                //t.AddCell(BuildHeaderCell("主键"));
+                //t.AddCell(BuildHeaderCell("外键"));
+                //t.AddCell(BuildHeaderCell("可空"));
+                //t.AddCell(BuildHeaderCell("注释"));
 
-                foreach (PDColumn column in table.ColumnList)
-                {
-                    t.AddCell(BuildCell(column.Name));
-                    t.AddCell(BuildCell(column.Code));
-                    t.AddCell(BuildCell(column.DataType));
-                    t.AddCell(BuildCell(column.Length == 0 ? "" : column.Length.ToString()));
-                    t.AddCell(BuildCell(column.Precision == 0 ? "" : column.Precision.ToString()));
-                    t.AddCell(BuildCell(column.IsPK ? " √" : ""));
-                    t.AddCell(BuildCell(column.IsFK ? " √" : ""));
-                    t.AddCell(BuildCell(column.Mandatory ? "" : " √"));
-                    t.AddCell(BuildCell(column.Comment));
-                }
+                //foreach (PDColumn column in table.ColumnList)
+                //{
+                //    t.AddCell(BuildCell(column.Name));
+                //    t.AddCell(BuildCell(column.Code));
+                //    t.AddCell(BuildCell(column.DataType));
+                //    t.AddCell(BuildCell(column.Length == 0 ? "" : column.Length.ToString()));
+                //    t.AddCell(BuildCell(column.Precision == 0 ? "" : column.Precision.ToString()));
+                //    t.AddCell(BuildCell(column.IsPK ? " √" : ""));
+                //    t.AddCell(BuildCell(column.IsFK ? " √" : ""));
+                //    t.AddCell(BuildCell(column.Mandatory ? "" : " √"));
+                //    t.AddCell(BuildCell(column.Comment));
+                //}
 
-                sec.Add(t);
+                //sec.Add(t);
             }
 
             doc.Add(cpt);
             doc.Close();
         }
 
-        private Cell BuildHeaderCell(string title)
-        {
-            Phrase phrase = new Phrase(title, font);
-            Cell cell = new Cell(phrase);
-            cell.Header = true;
-            cell.BackgroundColor = Color.LIGHT_GRAY;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            //cell.Border = 15;
-            //cell.BorderWidth = 0.2f;
-            //cell.BorderColor = Color.BLACK;
-            return cell;
-        }
+        //private Cell BuildHeaderCell(string title)
+        //{
+        //    Phrase phrase = new Phrase(title, font);
+        //    Cell cell =  new Cell(phrase);
+        //    cell.Header = true;
+        //    cell.BackgroundColor = Color.LIGHT_GRAY;
+        //    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+        //    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+        //    //cell.Border = 15;
+        //    //cell.BorderWidth = 0.2f;
+        //    //cell.BorderColor = Color.BLACK;
+        //    return cell;
+        //}
 
-        Cell BuildCell(string text)
-        {
-            Phrase phrase = new Phrase(text, font);
-            Cell cell = new Cell(phrase);
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            //cell.Border = 15;
-            //cell.BorderWidth = 0.2f;
-            //cell.BorderColor = Color.BLACK;
+        //Cell BuildCell(string text)
+        //{
+        //    Phrase phrase = new Phrase(text, font);
+        //    Cell cell = new Cell(phrase);
+        //    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+        //    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+        //    //cell.Border = 15;
+        //    //cell.BorderWidth = 0.2f;
+        //    //cell.BorderColor = Color.BLACK;
 
-            return cell;
-        }
+        //    return cell;
+        //}
 
         /// <summary>
         /// 
@@ -205,7 +204,7 @@ namespace Kalman.Studio
                     w = PdfWriter.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
                     break;
                 case ExportTyep.RTF:
-                    w = RtfWriter2.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
+                    //w = RtfWriter2.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
                     break;
                 //case ExportTyep.HTML:
                 //    w = HtmlWriter.GetInstance(doc, new FileStream(fileName, FileMode.Create, FileAccess.Write));
@@ -230,7 +229,8 @@ namespace Kalman.Studio
 
             foreach (SOTable table in tableList)
             {
-                sec = cpt.AddSection(new Paragraph(table.Name, font));
+                //sec = cpt.AddSection(new Paragraph(table.Name, font));
+                sec = cpt.AddSection(new Paragraph(table.Name));
 
                 if (string.IsNullOrEmpty(table.Comment) == false)
                 {
@@ -240,37 +240,37 @@ namespace Kalman.Studio
 
                 List<SOColumn> columnList = schema.GetTableColumnList(table);
 
-                t = new Table(7, columnList.Count);
+                //t = new Table(7, columnList.Count);
 
-                t.AutoFillEmptyCells = true;
-                t.CellsFitPage = true;
-                t.TableFitsPage = true;
-                t.Cellpadding = 3;
-                //if (exportType == ExportTyep.PDF) t.Cellspacing = 2;
-                t.DefaultVerticalAlignment = Element.ALIGN_MIDDLE;
+                //t.AutoFillEmptyCells = true;
+                //t.CellsFitPage = true;
+                //t.TableFitsPage = true;
+                //t.Cellpadding = 3;
+                ////if (exportType == ExportTyep.PDF) t.Cellspacing = 2;
+                //t.DefaultVerticalAlignment = Element.ALIGN_MIDDLE;
 
-                t.SetWidths(new int[] { 200, 150, 50, 50, 50, 100, 300 });
+                //t.SetWidths(new int[] { 200, 150, 50, 50, 50, 100, 300 });
 
-                t.AddCell(BuildHeaderCell("名称"));
-                t.AddCell(BuildHeaderCell("数据类型"));
-                t.AddCell(BuildHeaderCell("主键"));
-                t.AddCell(BuildHeaderCell("标志"));
-                t.AddCell(BuildHeaderCell("可空"));
-                t.AddCell(BuildHeaderCell("默认值"));
-                t.AddCell(BuildHeaderCell("注释"));
+                //t.AddCell(BuildHeaderCell("名称"));
+                //t.AddCell(BuildHeaderCell("数据类型"));
+                //t.AddCell(BuildHeaderCell("主键"));
+                //t.AddCell(BuildHeaderCell("标志"));
+                //t.AddCell(BuildHeaderCell("可空"));
+                //t.AddCell(BuildHeaderCell("默认值"));
+                //t.AddCell(BuildHeaderCell("注释"));
 
-                foreach (SOColumn column in columnList)
-                {
-                    t.AddCell(BuildCell(column.Name));
-                    t.AddCell(BuildCell(GetDbColumnType(column)));
-                    t.AddCell(BuildCell(column.PrimaryKey ? " √" : ""));
-                    t.AddCell(BuildCell(column.Identify ? " √" : ""));
-                    t.AddCell(BuildCell(column.Nullable ? " √" : ""));
-                    t.AddCell(BuildCell(column.DefaultValue == null ? "" : column.DefaultValue.ToString()));
-                    t.AddCell(BuildCell(column.Comment));
-                }
+                //foreach (SOColumn column in columnList)
+                //{
+                //    t.AddCell(BuildCell(column.Name));
+                //    t.AddCell(BuildCell(GetDbColumnType(column)));
+                //    t.AddCell(BuildCell(column.PrimaryKey ? " √" : ""));
+                //    t.AddCell(BuildCell(column.Identify ? " √" : ""));
+                //    t.AddCell(BuildCell(column.Nullable ? " √" : ""));
+                //    t.AddCell(BuildCell(column.DefaultValue == null ? "" : column.DefaultValue.ToString()));
+                //    t.AddCell(BuildCell(column.Comment));
+                //}
 
-                sec.Add(t);
+                //sec.Add(t);
             }
 
             doc.Add(cpt);
