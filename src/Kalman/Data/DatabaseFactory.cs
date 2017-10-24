@@ -63,7 +63,7 @@ namespace Kalman.Data
                     db = new OracleDatabase(connectionString);
                     break;
                 case "Devart.Data.Oracle": //http://evget.com/zh-CN/product/954/feature.aspx  http://www.devart.com/ 
-                case "DDTek.Oracle": //http://www.datadirect.com/index.html
+                case "DDTek.Oracle": //http://www.datadirect.com/index.html 由于删除了版权DLL，导致该功能可能无法使用。可在QQ群：122161138中下载source_lib.zip
                     providerFactory = DbProviderFactories.GetFactory(providerName);
                     db = new OracleDatabase(connectionString, providerFactory);
                     break;
