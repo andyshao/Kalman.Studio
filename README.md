@@ -12,6 +12,7 @@
 	5、数据库文档生成工具，支持输出word及pdf文件格式；
 	6、IIS日志解析器，小网站可以用用；
 	7、其他工具，字符串相关操作等。
+![软件界面](https://images.cnblogs.com/cnblogs_com/lingyun_k/244874/o_ks1.png)
 
 ## 一、配置编译
 
